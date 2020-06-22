@@ -143,7 +143,7 @@ public class SentinelSLinkedList<T> {
 	/**
 	 * Returns all values in the list (in the order they are stored in) as a string.
 	 * 
-	 * @return string A string displaying the contents of the list
+	 * @return A string displaying the contents of the list
 	 */
 	@Override
 	public String toString() {

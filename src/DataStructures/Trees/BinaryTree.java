@@ -1,14 +1,9 @@
 package DataStructures.Trees;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-
 import DataStructures.Queue;
-import DataStructures.Stack;
-import DataStructures.Graphs.Status;
-import DataStructures.Graphs.Vertex;
 /**
  * Binary Tree data structure. This has no organisation but enables adding, 
  * removing and searching for elements.
@@ -255,8 +250,8 @@ public class BinaryTree<T> {
 	}
 	
 	/**
-	 * Depth First Sort. Returns the vertex ID's in a linked list resembling the order
-	 * that the graph would be traversed in a depth first sort.
+	 * Pre-order traversal of the tree. Returns the vertex ID's in a queue resembling the order
+	 * that the graph would be traversed in a pre-order traversal.
 	 * @param startVertexId the ID of the vertex to start the sort on
 	 */
 	public Queue<T> preorder(Node<T> root) {
@@ -268,7 +263,12 @@ public class BinaryTree<T> {
 		}
 		return route;
 	}
-		
+	
+	/**
+	 * In-order traversal of the tree. Returns the vertex ID's in a queue resembling the order
+	 * that the graph would be traversed in a in-order traversal.
+	 * @param root the ID of the vertex to start the sort on
+	 */
 	public Queue<T> inorder(Node<T> root) {
 		Queue<T> route = new Queue<T>();
 		if (root != null) {
@@ -278,6 +278,11 @@ public class BinaryTree<T> {
 		}
 		return route;
 	}
+	/**
+	 * Post-order traversal of the tree. Returns the vertex ID's in a queue resembling the order
+	 * that the graph would be traversed in a post-order traversal.
+	 * @param startVertexId the ID of the vertex to start the sort on
+	 */
 	public Queue<T> postorder(Node<T> root) {
 		Queue<T> route = new Queue<T>();
 		if (root != null) {
@@ -288,27 +293,34 @@ public class BinaryTree<T> {
 		return route;
 	}
 
-	
-	public void display(int i) {
+	/**
+	 * Creates a window displaying this tree object.
+	 * @param title The title of the display window
+	 */
+	public void display(String title) {
 		int width = 960;
 		int height = 640;
-		JFrame frame = new JFrame("Tree " + i);
+		JFrame frame = new JFrame(title);
 		frame.setSize(width, height);
 		frame.setMinimumSize(new Dimension(width, height));
-		JComponent canvas = new Display<T>(root, width, height);
+		JComponent canvas = new TreeDisplay<T>(root, width, height);
         frame.add(canvas);
         frame.pack();
 		frame.setVisible(true);
 	}
 	
-
-	
+	@Override
 	public String toString() {
 		String tree = "Tree: \n";
 		tree += subtreeToString(root);
 		return tree;
 	}
 	
+	/**
+	 * Converts the subtree starting from the node given into a string.
+	 * @param head	 The node to start from
+	 * @return	the String describing the subtree
+	 */
 	public String subtreeToString(Node<T> head) {
 		String subtree = "";
 		if (head != null) {

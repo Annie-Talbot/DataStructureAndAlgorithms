@@ -1,17 +1,38 @@
 package DataStructures.Trees;
 /**
- * Weight represent whether a node is complete or not
- * @author theb4
+ * Complete Node class inherits Node but with the operation to
+ * check whether a node is complete or not.
+ * @author Annie Talbot
  *
- * @param <T>
+ * @param <T> The class of the object this node will hold
  */
 public class CompleteNode<T> extends Node<T> {
-
-	public CompleteNode(T value, int weight, CompleteNode<T> parent) {
+	
+	/**
+	 * Constructor for a CompleteNode object.
+	 * @param value	the value for this node to hold
+	 * @param parent	The parent node of this node
+	 */
+	public CompleteNode(T value, Node<T> parent) {
+		super(value, parent);
+	}
+	
+	/**
+	 * Constructor for a CompleteNode object with an extra parameter to assign a value
+	 * to the weight of the node.
+	 * @param value	the value for this node to hold
+	 * @param weight the weight to assign to this node
+	 * @param parent	The parent node of this node
+	 */
+	public CompleteNode(T value, int weight, Node<T> parent) {
 		super(value, parent);
 		setWeight(weight);
 	}
-
+	
+	/**
+	 * Operation to check if the subtree starting from this node is complete.
+	 * @return True = this subtree is complete, False = this subtree is NOT complete
+	 */
 	public boolean isComplete() {		
 		if (hasLeftChild()) {
 			if (((CompleteNode<T>) getLeftChild()).isComplete()) {

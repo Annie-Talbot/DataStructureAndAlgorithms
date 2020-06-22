@@ -109,8 +109,11 @@ public class Edge {
 		setStatus(Status.NOT_SEEN);
 	}
 
+	/**
+	 * Checks if this edge is directed (one-way).
+	 * @return True = is directed, False = is NOT directed
+	 */
 	public boolean isDirected() {
-		// TODO Auto-generated method stub
 		return isDirected;
 	}
 	

@@ -1,34 +1,58 @@
 package DataStructures.Trees;
 
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 import DataStructures.AVLTree;
+/**
+ * AVLTreeBuilder inherits JFrame and implement the interface ActionListener. The class is a
+ * small application used to display a visual representation of how an AVL adds elements to
+ * itself.
+ * @author Annie Talbot
+ *
+ */
+public class AVLTreeBuilder extends JFrame implements ActionListener{
 
-public class AVLTreeBuilder<T extends Comparable<T>> extends JFrame implements ActionListener{
-
+	/**
+	 * Serialisation ID for this class
+	 */
+	private static final long serialVersionUID = -103989763965455602L;
+	/*
+	 * Width of the frame.
+	 */
 	int width = 960;
+	/**
+	 * Height of the frame.
+	 */
 	int height = 740;
-	AVLTreePainter<T> canvas;
-	AVLTree<T> tree;
-	private SpinnerModel value = new SpinnerNumberModel(6, 2, 50, 1);
+	/**
+	 * The component that draws the tree to the frame.
+	 */
+	AVLTreePainter<Integer> canvas;
+	/**
+	 * The AVL Tree to be drawn.
+	 */
+	AVLTree<Integer> tree;
+	/**
+	 * The number spinner storing the value to be added to the tree upon user action.
+	 */
+	private SpinnerModel value = new SpinnerNumberModel(1, 1, 50, 1);
 	
-	public AVLTreeBuilder(String title, AVLTree<T> tree) {
+	/**
+	 * Constructor for an AVLTreeBuilder object.
+	 * @param title	The title of this frame.
+	 * @param tree	The tree to be drawn initially.
+	 */
+	public AVLTreeBuilder(String title, AVLTree<Integer> tree) {
 		super(title);
 		setMinimumSize(new Dimension(width, height));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -38,7 +62,7 @@ public class AVLTreeBuilder<T extends Comparable<T>> extends JFrame implements A
 		pane.setLayout(null);
 		
 		// Add components
-		this.canvas = new AVLTreePainter<T>(tree, width, height - 50);
+		this.canvas = new AVLTreePainter<Integer>(tree, width, height - 50);
         pane.add(canvas);
         
         JSpinner spinBox = new JSpinner(value);
@@ -64,7 +88,7 @@ public class AVLTreeBuilder<T extends Comparable<T>> extends JFrame implements A
 	public void actionPerformed(ActionEvent arg0) {
 		try {
 			System.out.println("Button pressed. Value of spin is: " + value.getValue().toString());
-			tree.add((T) value.getValue());
+			tree.add((Integer) value.getValue());
 			canvas.repaint();
 		} catch (DuplicateValueException e) {
 			e.printStackTrace();

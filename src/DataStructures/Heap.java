@@ -1,7 +1,13 @@
 package DataStructures;
 
 import DataStructures.Trees.Node;
-
+/**
+ * Heap class inherits PriotiryQueue. An implementation of the Heap data
+ * structure where elements are placed in the list according to their value.
+ * @author Annie Talbot
+ *
+ * @param <T> The class of the objects this heap will hold.
+ */
 public class Heap<T extends Comparable<T>> extends PriorityQueue<T>{
 
 	/**

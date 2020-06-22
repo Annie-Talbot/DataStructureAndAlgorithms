@@ -1,10 +1,20 @@
 package Algorithms;
 
 import DataStructures.LinkedLists.DNode;
-import DataStructures.LinkedLists.SentinelDLinkedList;
 
+/**
+ * SortMachine class. provides implementations for different sorting algorithms
+ * using linked lists and arrays.
+ * @author Annie Talbot
+ *
+ * @param <T> The class of the objects held in the linked list / array
+ */
 public class SortMachine<T extends Comparable<T>> {
 	
+	/**
+	 * Operation for running a selection sort on an array.
+	 * @param list the array to sort
+	 */
 	public void selectionSort(T[] list) {
 		int last = list.length - 1;
 		int posOfMax;
@@ -15,10 +25,10 @@ public class SortMachine<T extends Comparable<T>> {
 		}
 	}
 	
-	public void selectionSort(SentinelDLinkedList<T> list) {
-	}
-	
-	// INSERTION SORT
+	/**
+	 * Operation for running an insertion sort on an array.
+	 * @param list the array to sort
+	 */
 	public void insertionSort(T[] list) {
 		for (int i = 0; i < list.length - 1; i++) {
 			int newIndex = i + 1;
@@ -31,6 +41,10 @@ public class SortMachine<T extends Comparable<T>> {
 		}
 	}
 	
+	/**
+	 * Operation for running an insertion sort on a linked list.
+	 * @param list the linked list to sort
+	 */
 	public void insertionSort(LinkedList<T> list) {
 		DNode<T> currNode = list.getHead().getPrev();
 		while (currNode != list.getTail()) {
@@ -52,11 +66,21 @@ public class SortMachine<T extends Comparable<T>> {
 		}
 	}
 	
-	// QUICK SORT
+	/**
+	 * Operation for running a quick sort on an array.
+	 * @param list the array to sort
+	 */
 	public void quickSort(T[] list) {
 		quickSortRecursion(list, 0, list.length - 1);
 	}
 	
+	/**
+	 * Recursion method to split and order the list of value between the 2
+	 * indices given using quick sort methods
+	 * @param list	The array to sort
+	 * @param first	An index to start the sort on
+	 * @param last An index to end the sort on
+	 */
 	private void quickSortRecursion(T[] list, int first, int last) {
 		if (first < last) {
 			medianOf3(list, first, last);
@@ -67,6 +91,14 @@ public class SortMachine<T extends Comparable<T>> {
 		
 	}
 
+	/**
+	 * Operation to move all value after first either before or after depending
+	 * on if their value is below or above the value held at the first index.
+	 * @param list the array to sort
+	 * @param first the index of element pivot the other elements around
+	 * @param last the index of the last value to move
+	 * @return the new index of the value held at first
+	 */
 	private int partition(T[] list, int first, int last) {
 		int lastSorted = first;
 		int split = first;
@@ -81,6 +113,13 @@ public class SortMachine<T extends Comparable<T>> {
 		return split;
 	}
 
+	/**
+	 * Moves elements so that the item at the first index is the median of the
+	 * elements at the first, last and middle indices.
+	 * @param list	The array to alter
+	 * @param first	the first index
+	 * @param last	the last index
+	 */
 	private void medianOf3(T[] list, int first, int last) {
 		int middle = (first + last) / 2;
 		// Puts lowest element in first position
@@ -99,10 +138,20 @@ public class SortMachine<T extends Comparable<T>> {
 		swap(list, middle, first);
 	}
 	
+	/**
+	 * Operation for running a quick sort on a linked list.
+	 * @param list the linked list to sort
+	 */
 	public void quickSort(LinkedList<T> list) {
 		list.insertEnd(quickSortRecursion(list));
 	}
 	
+	/**
+	 * Recursion method to split and order the list of values using quick sort 
+	 * methods.
+	 * @param list	The linked list to sort
+	 * @return the sorted linked list
+	 */
 	private LinkedList<T> quickSortRecursion(LinkedList<T> list) {
 		if (list.getSize() > 1) {
 			T split = list.removeBeginning();
@@ -130,11 +179,21 @@ public class SortMachine<T extends Comparable<T>> {
 		}
 	}
 	
-	// MERGE SORT
+	/**
+	 * Operation for running a merge sort on an array.
+	 * @param list the array to sort
+	 */
 	public void mergeSort(Integer[] list) {
 		mergeSortRecursion(list, 0, list.length - 1);		
 	}
 
+	/**
+	 * Recursion method to split and order the list of values between the 2
+	 * indices given using merge sort methods
+	 * @param list	The array to sort
+	 * @param first	An index to start the sort on
+	 * @param last An index to end the sort on
+	 */
 	private void mergeSortRecursion(Integer[] list, int first, int last) {
 		if (first < last) {
 			int centre = (first + last) / 2;
@@ -166,10 +225,20 @@ public class SortMachine<T extends Comparable<T>> {
 		
 	}
 
+	/**
+	 * Operation for running a merge sort on a linked list.
+	 * @param list the linked list to sort
+	 */
 	public void mergeSort(LinkedList<T> list) {
 		list.replaceList(mergeRecur(list.getHead().getPrev()));
 	}
 	
+	/**
+	 * Recursion method to split and order the list of values using merge sort 
+	 * methods.
+	 * @param head	The head of the raw list
+	 * @return the head of the sorted list
+	 */
 	private DNode<T> mergeRecur(DNode<T> head) {
 		// if next is tail 
 		if (head.getPrev().getValue() != null) {
@@ -186,6 +255,13 @@ public class SortMachine<T extends Comparable<T>> {
 		return head;
 	}
 
+	/**
+	 * Combines the elements in the lists starting with left and right nodes, 
+	 * maintaining sorted order.
+	 * @param left	The head of one sorted list
+	 * @param right	The head of the other sorted list
+	 * @return the head of the sorted list
+	 */
 	private DNode<T> merge(DNode<T> left, DNode<T> right) {
 		if (left.getValue() == null) {
 			// Left is a tail
@@ -208,6 +284,11 @@ public class SortMachine<T extends Comparable<T>> {
 		}
 	}
 
+	/**
+	 * Operation to find the node in the middle of the linked list
+	 * @param head the head of the linked list
+	 * @return the node at the middle of the list
+	 */
 	private DNode<T> findMiddleNode(DNode<T> head) {
 		DNode<T> slow = head;
 		DNode<T> fast = head.getPrev();
@@ -236,13 +317,24 @@ public class SortMachine<T extends Comparable<T>> {
 		return output;
 	}
 	
-	
+	/**
+	 * Operation to swap the values in an array stored in the indices given.
+	 * @param list the array containing the values
+	 * @param index1 
+	 * @param index2
+	 */
 	private void swap(T[] list, int index1, int index2) {
 		T temp = list[index1];
 		list[index1] = list[index2];
 		list[index2] = temp;
 	}
 	
+	/**
+	 * Operation to find the largest value in an array before the index given.
+	 * @param list the array to search
+	 * @param lastIndex index of the last element to compare
+	 * @return the index of the highest value
+	 */
 	private int findMax(T[] list, int lastIndex) {
 		int highestIndex = 0;
 		for (int i = 0; i <= lastIndex; i++) {
@@ -251,10 +343,5 @@ public class SortMachine<T extends Comparable<T>> {
 			}
 		}
 		return highestIndex;
-	}
-	private static void printArray(Integer[] amounts) {
-		for (int i = 0; i < amounts.length; i++) {
-			System.out.println(i + ": " + amounts[i]);
-		}
 	}
 }

@@ -3,7 +3,6 @@ package DataStructures.Graphs;
 import DataStructures.PriorityQueue;
 import DataStructures.Queue;
 import DataStructures.Stack;
-import DataStructures.Trees.TreeIsEmptyException;
 
 /**
  * Graph object for a homogeneous graph data structure implemented using an
@@ -104,10 +103,16 @@ public class Graph<T> {
 				throw new EdgeAlreadyExistsException("This edge already exists within the graph");
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("One of the vertices this edge connects is out of bounds of the graph");
 		}
 	}
 	
-	public void addEdge(Edge edge) throws EdgeAlreadyExistsException {
+	/**
+	 * Operation to add an edge to the graph.
+	 * @param edge	The edge to be added this the graph
+	 * @throws EdgeAlreadyExistsException	If this edge is already in the graph
+	 */
+	protected void addEdge(Edge edge) throws EdgeAlreadyExistsException {
 		try {
 			if (!vertices[edge.getEndVertex()].isConnectedTo(edge.getStartVertex()) && 
 					!vertices[edge.getStartVertex()].isConnectedTo(edge.getEndVertex())) {
@@ -119,6 +124,7 @@ public class Graph<T> {
 				throw new EdgeAlreadyExistsException("This edge already exists within the graph");
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("One of the vertices this edge connects is out of bounds of the graph");
 		}
 		
 	}
@@ -129,6 +135,7 @@ public class Graph<T> {
 	 * @param startVertexId the ID of the vertex to start the sort on
 	 */
 	public Queue<Integer> BFS(int startVertexId) {
+		resetStatus();
 		//Create exception here!
 		Queue<Integer> route = new Queue<Integer>();
 		Queue<Vertex<T>> seenNodes = new Queue<Vertex<T>>();
@@ -158,6 +165,7 @@ public class Graph<T> {
 	 * @param startVertexId the ID of the vertex to start the sort on
 	 */
 	public Queue<Integer> DFS(int startVertexId) {
+		resetStatus();
 		//Create exception here!
 		Queue<Integer> route = new Queue<Integer>();
 		Stack<Vertex<T>> seenNodes = new Stack<Vertex<T>>();
@@ -181,10 +189,17 @@ public class Graph<T> {
 		return route;
 	}
 	
+	/**
+	 * Prim's Algorithm. Conducts Prim's Algorithm to find a minimum spanning tree
+	 * of this graph starting from the vertex given.
+	 * @param startVertexId The ID of the vertex to start the algorithm on.
+	 * @return Graph object that holds the minimum spanning tree.
+	 */
 	public Graph<T> prims(int startVertexId) {
+		resetStatus();
 		// Holds edges that have been seen, using edge weights as priority
 		PriorityQueue<Edge> queue = new PriorityQueue<Edge>();
-		// The minimum spanning tree formed by prims algorithm
+		// The minimum spanning tree to be formed
 		Graph<T> MST = new Graph<T>(getNoVertices());
 		
 		Edge currEdge = new Edge(null, startVertexId, 0, false);
@@ -215,8 +230,15 @@ public class Graph<T> {
 		}
 		return MST;
 	}
-	
+	/**
+	 * Dijkstra's Algorithm. Conducts Dijkstra's Algorithm to find the shortest distance to
+	 * each of the vertices from the start vertex given.
+	 * @param startVertexId The ID of the vertex to start the algorithm on
+	 * @return Graph object that holds the edges required to travel from the start vertex to
+	 * every other vertex in the minimum amount of time
+	 */
 	public Graph<T> dijkstra(int startVertexId) {
+		resetStatus();
 		PriorityQueue<Edge> queue = new PriorityQueue<Edge>();
 		Graph<T> SPT = new Graph<T>(getNoVertices());
 		
@@ -266,7 +288,7 @@ public class Graph<T> {
 	/**
 	 * Resets the status of all vertices and edges in the graph to 'not seen'
 	 */
-	public void resetStatus() {
+	private void resetStatus() {
 		for( Vertex<T> v : vertices) {
 			v.setStatus(Status.NOT_SEEN);
 			for (Object[] e : v.getEdges()) {

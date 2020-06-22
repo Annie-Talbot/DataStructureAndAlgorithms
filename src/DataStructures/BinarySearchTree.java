@@ -6,22 +6,36 @@ import DataStructures.Trees.Node;
 import DataStructures.Trees.TreeIsEmptyException;
 import DataStructures.Trees.ValueNotFoundException;
 /**
- * 
+ * BinarySearchTree class. Implementation of a Binary Search Tree data structure with
+ * operations to add, search and remove elements.
  * @author Annie Talbot
  *
- * @param <T>
+ * @param <T> The class of the objects this tree will hold.
  */
 public class BinarySearchTree<T extends Comparable<T>> {
-	
+	/**
+	 * The binary tree holding all the values in the BST. 
+	 */
 	private BinaryTree<T> tree;
-	
+	/**
+	 * Getter for the tree.
+	 * @return	the tree
+	 */
 	public BinaryTree<T> getTree() {
 		return tree;
 	}
+	
+	/**
+	 * Constructor for an empty BinarySearchTree object.
+	 */
 	public BinarySearchTree() {
 		tree = new BinaryTree<T>();
 	}
 	
+	/**
+	 * Constructor for a BinarySearchTree object with a first value to be added.
+	 * @param value the value to be added
+	 */
 	public BinarySearchTree(T value) {
 		tree = new BinaryTree<T>(value);
 	}
@@ -38,6 +52,14 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		return addInternal(value, tree.getRoot());
 	}
 	
+	/**
+	 * The internal recursive add operation that places an element in its correct position
+	 * within the tree.
+	 * @param value	the value to be added
+	 * @param root	The subtree to add this value to
+	 * @return	the node holding the added value
+	 * @throws DuplicateValueException	thrown if this value is already in the tree
+	 */
 	protected Node<T> addInternal(T value, Node<T> root) throws DuplicateValueException {
 		if (root != null) {
 			if (root.getValue().compareTo(value) > 0) {
@@ -77,6 +99,14 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		return deleteInternal(value, tree.getRoot());
 	}
 	
+	/**
+	 * The internal recursive add operation that places an element in its correct position
+	 * within the tree.
+	 * @param value	the value to be removed
+	 * @param root	The subtree to remove this value from
+	 * @return	The removed Node
+	 * @throws ValueNotFoundException thrown if this value is not in the tree
+	 */
 	protected Node<T> deleteInternal(T value, Node<T> root) throws ValueNotFoundException {
 		if (root != null) {
 			if (root.getValue().compareTo(value) > 0) {
@@ -130,18 +160,37 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		}
 	}
 	
-	public void display(int i) {
-		tree.display(i);
+	/**
+	 * Operation to create a window hat display the current state of the tree.
+	 * @param title	The title of this window
+	 */
+	public void display(String title) {
+		tree.display(title);
 	}
 	
+	/**
+	 * Operation to create a string describing all the values in the tree, 
+	 * traversed in pre-order.
+	 * @return	The string describing the traversal
+	 */
 	public String preorder() {
 		return tree.preorder(tree.getRoot()).toString();
 	}
 	
+	/**
+	 * Operation to create a string describing all the values in the tree, 
+	 * traversed in in-order.
+	 * @return	The string describing the traversal
+	 */
 	public String inorder() {
 		return tree.inorder(tree.getRoot()).toString();
 	}
 	
+	/**
+	 * Operation to create a string describing all the values in the tree, 
+	 * traversed in post-order.
+	 * @return	The string describing the traversal
+	 */
 	public String postorder() {
 		return tree.postorder(tree.getRoot()).toString();
 	}
